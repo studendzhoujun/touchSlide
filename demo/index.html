@@ -37,6 +37,7 @@
            var $slide = document.getElementById('J_slide');
            var more = document.getElementById('J_more');
            var mySlide = new touchSlide($slide); 
+           var flag=null;
            mySlide.events.on('leftOver',function(left){
                console.log(left);
            });
@@ -44,10 +45,17 @@
             more.style.display = 'block';
             if(left > 110){
                 console.log('go!'); 
+                flag=true;
+            }else{
+                console.log('nogo!')
+                flag=false;
             }
            });
            mySlide.events.on('end',function(left){
             more.style.display = 'none';
+              if(flag){
+                location.href='https://www.baidu.com';
+              }
            });
 
         </script>
