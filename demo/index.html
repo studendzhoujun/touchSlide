@@ -37,7 +37,7 @@
         <script>
            var $slide = document.getElementById('J_slide');
            var more = document.getElementById('J_more');
-           var mySlide = new touchSlide($slide); 
+           var mySlide = new touchSlide({ele:$slide}); 
            var flag=null;
            mySlide.events.on('leftOver',function(left){
                console.log(left);

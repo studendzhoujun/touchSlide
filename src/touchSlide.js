@@ -39,17 +39,21 @@
     }
   };
 
-  var ATTRS = {
+ /* var ATTRS = {
     BOXCLS: 'J_slide_box',
     ITEMCLS: 'J_slide_item'
-  };
+  };*/
 
-  function Slide($element) {
-    this.$element = $element;
+  function Slide(param) {
+    this.$element = param.ele;
     this.left = 0;
     this.events = new Events();
     this.dir='';
-    this.init($element);
+    this.ATTRS={
+        BOXCLS: param.BOXCLS||'J_slide_box',
+        ITEMCLS:param.ITEMCLS||'J_slide_item'
+    };
+    this.init(param.ele);
   }
 
   Slide.prototype = {
@@ -101,12 +105,13 @@
       utils.addEvent($box, 'touchend', this.end.bind(this));
     },
     setBoxStyle: function($element) {
-      var $box = $element.getElementsByClassName(ATTRS.BOXCLS)[0];
-      var $items = $element.getElementsByClassName(ATTRS.ITEMCLS);
+      var $box = $element.getElementsByClassName(this.ATTRS.BOXCLS)[0];
+      var $items = $element.getElementsByClassName(this.ATTRS.ITEMCLS);
       var boxwidth = 0;
       Array.from($items).forEach(function($item) {
         boxwidth += $item.offsetWidth + parseInt(utils.getStyle($item, 'margin-left'), 10) + parseInt(utils.getStyle($item, 'margin-right'), 10);
       });
+      console.log(parseFloat(utils.getStyle($items[0], 'margin-left'), 10).toFixed(2));
       $box.style.width = boxwidth + 'px';
       $box.style.height = $items[0].offsetHeight + 'px';
       $element.style.width = $element.offsetWidth + 'px';
