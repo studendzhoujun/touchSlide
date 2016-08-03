@@ -18,9 +18,10 @@
                 width:100px;
                 line-height:100px;
                 list-style:none;
+                background:#ccc;
             }
         </style>
-        <div style="height:1000px;"></div>
+        <div style="height:1000px;background:#f90"></div>
         <div id="J_slide">
             <ul class="J_slide_box" style="position:relative;">
                 <li class="J_slide_item">1</li> 
@@ -47,12 +48,12 @@
                 console.log('go!'); 
                 flag=true;
             }else{
-                console.log('nogo!')
+                console.log('nogo!');
                 flag=false;
             }
            });
            mySlide.events.on('end',function(left){
-            more.style.display = 'none';
+            //more.style.display = 'none';
               if(flag){
                 location.href='https://www.baidu.com';
               }

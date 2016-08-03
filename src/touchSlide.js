@@ -48,6 +48,7 @@
     this.$element = $element;
     this.left = 0;
     this.events = new Events();
+    this.dir='';
     this.init($element);
   }
 
@@ -55,20 +56,35 @@
     constructor: Slide,
     start: function(ev) {
       this.startX = ev.touches[0].clientX - this.boxLeft;
+      this.startY = ev.touches[0].clientY;
     },
     move: function(ev) {
-      this.moveX = ev.touches[0].clientX - (this.startX - this.left);
-      this.$box.style.transition = '';
-      this.$box.style.transform = 'translate(' + this.moveX + 'px,0) translateZ(0px)';
-      if (this.moveX > 0) {
-        this.events.trigger('leftOver', [this.moveX]);
-      } else if (this.boxWidth - Math.abs(this.moveX) < this.$element.clientWidth) {
-        this.events.trigger('rightOver', [this.$element.clientWidth - (this.boxWidth - Math.abs(this.moveX))]);
-      }
-      ev.preventDefault();
+         if(this.dir==''){
+              if (Math.abs(ev.touches[0].clientX - this.startX) > 5) {
+                this.dir = 'x';
+              }
+              if (Math.abs(ev.touches[0].clientY - this.startY) > 5) {
+                this.dir = 'y';
+              }
+         }else{
+             switch(this.dir){
+                   case 'x':
+                    this.moveX = ev.touches[0].clientX - (this.startX - this.left);
+                    this.$box.style.transition = '';
+                    this.$box.style.transform = 'translate(' + this.moveX + 'px,0) translateZ(0px)';
+                    if (this.moveX > 0) {
+                        this.events.trigger('leftOver', [this.moveX]);
+                    } else if (this.boxWidth - Math.abs(this.moveX) < this.$element.clientWidth) {
+                      this.events.trigger('rightOver', [this.$element.clientWidth - (this.boxWidth - Math.abs(this.moveX))]);
+                    }
+                      ev.preventDefault();
+                    break;
+             }
+         }
     },
     end: function() {
       this.left = this.moveX;
+      this.dir='';
       if (this.left > 0) {
         this.left = 0;
       } else if (this.boxWidth - Math.abs(this.left) < this.$element.clientWidth) {
