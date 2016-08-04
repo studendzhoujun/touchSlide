@@ -36,6 +36,9 @@
     },
     removeEvent: function(obj, sEv, fn) {
       obj.removeEventListener(sEv, fn, false);
+    },
+    ceilNum:function(str){
+      return Math.ceil(parseFloat(str,10));
     }
   };
 
@@ -87,7 +90,7 @@
          }
     },
     end: function() {
-      this.left = this.moveX;
+      this.left = this.moveX?this.moveX:0;
       this.dir='';
       if (this.left > 0) {
         this.left = 0;
@@ -108,8 +111,8 @@
       var $box = $element.getElementsByClassName(this.ATTRS.BOXCLS)[0];
       var $items = $element.getElementsByClassName(this.ATTRS.ITEMCLS);
       var boxwidth = 0;
-      Array.from($items).forEach(function($item) {
-        boxwidth += $item.offsetWidth + parseInt(utils.getStyle($item, 'margin-left'), 10) + parseInt(utils.getStyle($item, 'margin-right'), 10);
+     Array.from($items).forEach(function($item) {
+        boxwidth += $item.offsetWidth + utils.ceilNum(utils.getStyle($item, 'margin-left')) + utils.ceilNum(utils.getStyle($item, 'margin-right'));
       });
       console.log(parseFloat(utils.getStyle($items[0], 'margin-left'), 10).toFixed(2));
       $box.style.width = boxwidth + 'px';
